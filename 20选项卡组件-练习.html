@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 div,#div2 div,#div3 div,#div4 div{width:200px;height:200px;border:1px solid #000;display:none;}
+.active{background:red;}
+</style>
+<script src="jquery-1.10.2.min.js"></script>
+<script>
+
+/**
+	title : 基于JQ的选项卡组件
+	
+	Options : event   delay
+	
+	Methods : nowSel()   getContent()
+	
+	Events : beforeClick  afterClick
+
+*/
+
+//jQ中的主动触发 : trigger()
+$(function(){
+	function Tab(){
+		this.oParent = null;
+		this.aInput = null;
+		this.aDiv = null;
+		this.iNow = 0;
+		this.settings = {
+			event:'click',
+			delay:0
+		}
+	}
+	Tab.prototype.init = function(id,opt){
+		this.oParent = $('#'+id);
+		this.aInput = this.oParent.find('input');
+		this.aDiv = this.oParent.find('div');
+		$.extend(this.settings,opt);
+		var This = this;
+		var timer = null;
+		if (this.settings.event == 'mouseover' && this.settings.delay) {
+			This.aInput.on(This.settings.event,function(){
+				
+				var _this = this;
+				timer = setTimeout(function(){
+
+// 提取函数--------------------------------------------
+					$(This).trigger('beforeClick');// 自定义事件1
+					This.aInput.attr('class','');
+					$(_this).attr('class','active');
+					This.aDiv.hide();
+					This.aDiv.eq($(_this).index()).show();
+					This.iNow = $(this).index();
+					$(This).trigger('afterClick');// 自定义事件2
+// 提取函数--------------------------------------------
+
+
+				}, This.settings.delay)
+
+
+			}).mouseout(function(event) {
+				clearInterval(timer)
+			});;
+			
+		} else {
+			this.aInput.on(this.settings.event,function(){
+
+// 提取函数--------------------------------------------
+				$(This).trigger('beforeClick');// 自定义事件1
+				This.aInput.attr('class','');
+				$(this).attr('class','active');
+				This.aDiv.hide();
+				This.aDiv.eq($(this).index()).show();
+				This.iNow = $(this).index();
+				$(This).trigger('afterClick');// 自定义事件2
+				console.log(This.iNow)
+// 提取函数--------------------------------------------
+
+
+			});
+		}
+
+
+	}
+
+	Tab.prototype.change = function(){
+		
+	}
+
+	Tab.prototype.nowSel = function(index){
+			this.iNow = index;
+			this.aInput.attr('class','');
+			this.aInput.eq(index).attr('class','active');
+			this.aDiv.hide();
+			this.aDiv.eq(index).show();
+			// console.log(this.iNow)
+	}
+
+	Tab.prototype.getContent = function(){
+		console.log(this.iNow)
+		return this.aDiv.eq(this.iNow).html();
+	}
+
+
+ var t1 = new Tab();
+ t1.init('div1',{});
+
+  var t2 = new Tab();
+ t2.init('div2',{
+ 	event:'mouseover'
+ });
+
+  var t3 = new Tab();
+ t3.init('div3',{
+ 	event:'mouseover',
+ 	delay:200
+ });
+
+  var t4 = new Tab();
+ t4.init('div4',{
+ });
+ t4.nowSel(2);
+
+//自定义事件
+$(t4).on('beforeClick', function(event) {
+	alert(t4.getContent());
+});
+
+$(t4).on('afterClick', function(event) {
+	alert(t4.getContent());
+});
+
+$('#input1').click(function(event) {
+	alert(t4.getContent());
+	// t4.getContent()
+});
+})
+
+</script>
+</head>
+
+<body>
+ <div id="div1">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+
+  <div id="div2">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+
+   <div id="div3">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+
+   <div id="div4">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+
+ <input type="button" value="获取内容" id='input1'>
+</body>
+</html>
