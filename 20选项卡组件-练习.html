@@ -4,11 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <style>
-<<<<<<< HEAD
 #div1 div,#div2 div,#div3 div,#div4 div{width:200px;height:200px;border:1px solid #000;display:none;}
-=======
-#div1 div,#div2 div{width:200px;height:200px;border:1px solid #000;display:none;}
->>>>>>> d8f41c88af94bb333a6b1802a359e73570507931
 .active{background:red;}
 </style>
 <script src="jquery-1.10.2.min.js"></script>
@@ -31,10 +27,7 @@ $(function(){
 		this.oParent = null;
 		this.aInput = null;
 		this.aDiv = null;
-<<<<<<< HEAD
 		this.iNow = 0;
-=======
->>>>>>> d8f41c88af94bb333a6b1802a359e73570507931
 		this.settings = {
 			event:'click',
 			delay:0
@@ -46,7 +39,6 @@ $(function(){
 		this.aDiv = this.oParent.find('div');
 		$.extend(this.settings,opt);
 		var This = this;
-<<<<<<< HEAD
 		var timer = null;
 		if (this.settings.event == 'mouseover' && this.settings.delay) {
 			This.aInput.on(This.settings.event,function(){
@@ -90,16 +82,6 @@ $(function(){
 			});
 		}
 
-=======
-		this.aInput.on(this.settings.event,function(){
-			This.aInput.attr('class','');
-			$(this).attr('class','active');
-			This.aDiv.hide();
-			This.aDiv.eq($(this).index()).show();
-
-
-		})
->>>>>>> d8f41c88af94bb333a6b1802a359e73570507931
 
 	}
 
@@ -107,7 +89,6 @@ $(function(){
 		
 	}
 
-<<<<<<< HEAD
 	Tab.prototype.nowSel = function(index){
 			this.iNow = index;
 			this.aInput.attr('class','');
@@ -122,8 +103,6 @@ $(function(){
 		return this.aDiv.eq(this.iNow).html();
 	}
 
-=======
->>>>>>> d8f41c88af94bb333a6b1802a359e73570507931
 
  var t1 = new Tab();
  t1.init('div1',{});
@@ -139,7 +118,6 @@ $(function(){
  	delay:200
  });
 
-<<<<<<< HEAD
   var t4 = new Tab();
  t4.init('div4',{
  });
@@ -160,10 +138,6 @@ $('#input1').click(function(event) {
 });
 })
 
-=======
-})
-	
->>>>>>> d8f41c88af94bb333a6b1802a359e73570507931
 </script>
 </head>
 
@@ -194,7 +168,6 @@ $('#input1').click(function(event) {
  	<div>2222</div>
  	<div>3333</div>
  </div>
-<<<<<<< HEAD
 
    <div id="div4">
  	<input type="button" class="active" value="1">
@@ -206,7 +179,5 @@ $('#input1').click(function(event) {
  </div>
 
  <input type="button" value="获取内容" id='input1'>
-=======
->>>>>>> d8f41c88af94bb333a6b1802a359e73570507931
 </body>
 </html>
