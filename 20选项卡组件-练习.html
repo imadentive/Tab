@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 div,#div2 div{width:200px;height:200px;border:1px solid #000;display:none;}
+.active{background:red;}
+</style>
+<script src="jquery-1.10.2.min.js"></script>
+<script>
+
+/**
+	title : 基于JQ的选项卡组件
+	
+	Options : event   delay
+	
+	Methods : nowSel()   getContent()
+	
+	Events : beforeClick  afterClick
+
+*/
+
+//jQ中的主动触发 : trigger()
+$(function(){
+	function Tab(){
+		this.oParent = null;
+		this.aInput = null;
+		this.aDiv = null;
+		this.settings = {
+			event:'click',
+			delay:0
+		}
+	}
+	Tab.prototype.init = function(id,opt){
+		this.oParent = $('#'+id);
+		this.aInput = this.oParent.find('input');
+		this.aDiv = this.oParent.find('div');
+		$.extend(this.settings,opt);
+		var This = this;
+		this.aInput.on(this.settings.event,function(){
+			This.aInput.attr('class','');
+			$(this).attr('class','active');
+			This.aDiv.hide();
+			This.aDiv.eq($(this).index()).show();
+
+
+		})
+
+	}
+
+	Tab.prototype.change = function(){
+		
+	}
+
+
+ var t1 = new Tab();
+ t1.init('div1',{});
+
+  var t2 = new Tab();
+ t2.init('div2',{
+ 	event:'mouseover'
+ });
+
+  var t3 = new Tab();
+ t3.init('div3',{
+ 	event:'mouseover',
+ 	delay:200
+ });
+
+})
+	
+</script>
+</head>
+
+<body>
+ <div id="div1">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+
+  <div id="div2">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+
+   <div id="div3">
+ 	<input type="button" class="active" value="1">
+ 	<input type="button" value="2">
+ 	<input type="button" value="3">
+ 	<div style="display:block">1111</div>
+ 	<div>2222</div>
+ 	<div>3333</div>
+ </div>
+</body>
+</html>
